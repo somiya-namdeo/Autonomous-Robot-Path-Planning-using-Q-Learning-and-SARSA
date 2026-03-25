@@ -34,7 +34,7 @@ class QLearningTable:
 
     def check_state_exist(self, state):
         if state not in self.q_table.index:
-            self.q_table.loc[state] = [0] * len(self.actions)
+            self.q_table.loc[state] = [0.0] * len(self.actions)
 
     def print_q_table(self):
         final_route_coordinates = final_states()
