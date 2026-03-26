@@ -145,23 +145,23 @@ python run_agent.py
 python compare.py
 ```
 
-### Tech Stack
-` ` `
-Python
-NumPy
-Pandas
-Matplotlib
-Tkinter
-Pillow
-` ` `
+## Tech Stack
 
-### Applications
-` ` `
-Autonomous robot navigation
-Path optimization in constrained environments
-Game AI and simulations
-Smart transportation and logistics
-` ` `
+- Python  
+- NumPy  
+- Pandas  
+- Matplotlib  
+- Tkinter  
+- Pillow  
+
+---
+
+## Applications
+
+- Autonomous robot navigation  
+- Path optimization in constrained environments  
+- Game AI and simulations  
+- Smart transportation and logistics  
 
 ### Author
 Somiya Namdeo
