@@ -82,42 +82,47 @@ class SarsaTable:
 
     # Plot the results (number of steps and cost per episode)
     def plot_results(self, steps, cost):
-        # Create a new figure with multiple subplots
         fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(12, 8))
 
-        # Plot 1: Episode vs. Steps
+        # Smoothed Steps
         ax1 = axes[0, 0]
-        ax1.plot(np.arange(len(steps)), steps, 'b')
+        ax1.plot(pd.Series(steps).rolling(20).mean(), 'b')
+        ax1.set_title('Steps (Smoothed)')
         ax1.set_xlabel('Episode')
         ax1.set_ylabel('Steps')
-        ax1.set_title('Episode vs. Steps')
 
-        # Plot 2: Episode vs. Cost
+        # Smoothed Cost
         ax2 = axes[0, 1]
-        ax2.plot(np.arange(len(cost)), cost, 'r')
+        ax2.plot(pd.Series(cost).rolling(20).mean(), 'r')
+        ax2.set_title('Cost (Smoothed)')
         ax2.set_xlabel('Episode')
         ax2.set_ylabel('Cost')
-        ax2.set_title('Episode vs. Cost')
 
-        # Calculate and plot rolling average of steps
-        rolling_window = 10
-        rolling_average = pd.Series(steps).rolling(rolling_window).mean()
+        # Rolling Steps
         ax3 = axes[1, 0]
-        ax3.plot(np.arange(len(rolling_average)), rolling_average, 'g')
-        ax3.set_xlabel('Episode')
-        ax3.set_ylabel('Rolling Average Steps')
-        ax3.set_title('Rolling Average Steps (Window={})'.format(rolling_window))
+        rolling_steps = pd.Series(steps).rolling(20).mean()
+        ax3.plot(rolling_steps, 'g')
+        ax3.set_title('Steps Trend (Window=20)')
 
-        # Calculate and plot rolling average of cost
-        rolling_average_cost = pd.Series(cost).rolling(rolling_window).mean()
+        # Rolling Cost
         ax4 = axes[1, 1]
-        ax4.plot(np.arange(len(rolling_average_cost)), rolling_average_cost, 'm')
-        ax4.set_xlabel('Episode')
-        ax4.set_ylabel('Rolling Average Cost')
-        ax4.set_title('Rolling Average Cost (Window={})'.format(rolling_window))
+        rolling_cost = pd.Series(cost).rolling(20).mean()
+        ax4.plot(rolling_cost, 'm')
+        ax4.set_title('Cost Trend (Window=20)')
 
-        # Adjust layout
         plt.tight_layout()
 
-        # Show the plots
+        # Convergence Graph
+        fig2 = plt.figure()
+        plt.plot(pd.Series(steps).rolling(50).mean(), label="Steps (Smoothed)")
+        plt.title("SARSA Convergence")
+        plt.xlabel("Episode")
+        plt.ylabel("Steps")
+        plt.legend()
+        plt.grid()
+
+        # Save graphs
+        fig.savefig("sarsa_main_plots.png")
+        fig2.savefig("sarsa_convergence.png")
+
         plt.show()

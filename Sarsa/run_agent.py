@@ -1,4 +1,6 @@
 # Importing classes
+import numpy as np
+import pandas as pd
 from env import Environment
 from agent_brain import SarsaTable
 
@@ -49,9 +51,33 @@ def train_agent():
 
     # Show the final route
     env.final()
-
-    # Print the Q-table with values for each action
     RL.print_q_table()
+    # Save results to CSV
+    df = pd.DataFrame({
+    "steps": steps_per_episode,
+    "cost": total_costs_per_episode
+    })
+    df.to_csv("sarsa.csv", index=False)
+
+    print("\n------ SARSA PERFORMANCE ------")
+
+    print("Average Steps:", np.mean(steps_per_episode))
+    print("Final 50 Avg Steps:", np.mean(steps_per_episode[-50:]))
+
+    print("Min Steps:", np.min(steps_per_episode))
+    print("Max Steps:", np.max(steps_per_episode))
+
+    print("Variance:", np.var(steps_per_episode))
+
+    print("Average Cost:", np.mean(total_costs_per_episode))
+    print("Max Reward:", np.max(total_costs_per_episode))
+
+    print("Efficiency (%):",
+      ((np.mean(steps_per_episode[:100]) - np.mean(steps_per_episode[-100:]))
+       / np.mean(steps_per_episode[:100])) * 100)
+
+    print("Convergence (Last 50 Avg Steps):",
+      np.mean(steps_per_episode[-50:]))
 
     # Plot the results (number of steps and total cost per episode)
     RL.plot_results(steps_per_episode, total_costs_per_episode)

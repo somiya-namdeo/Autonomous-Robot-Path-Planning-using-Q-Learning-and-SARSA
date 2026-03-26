@@ -45,7 +45,7 @@ class SarsaTable:
         q_predict = self.q_table.loc[state, action]
 
         # Checking if the next state is free or it is obstacle or goal
-        if next_state != 'goal' or next_state != 'obstacle':
+        if next_state != 'goal' and next_state != 'obstacle':
             q_target = reward + self.gamma * self.q_table.loc[next_state, next_action]
         else:
             q_target = reward
@@ -85,35 +85,45 @@ class SarsaTable:
 
     # Plotting the results for the number of steps
     def plot_results(self, steps, cost):
-        #
-        f, (ax1, ax2) = plt.subplots(nrows=1, ncols=2)
-        #
-        ax1.plot(np.arange(len(steps)), steps, 'b')
+        fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(12, 8))
+
+        # Smoothed Steps
+        ax1 = axes[0, 0]
+        ax1.plot(pd.Series(steps).rolling(20).mean(), 'b')
+        ax1.set_title('Steps (Smoothed)')
         ax1.set_xlabel('Episode')
         ax1.set_ylabel('Steps')
-        ax1.set_title('Episode via steps')
 
-        #
-        ax2.plot(np.arange(len(cost)), cost, 'r')
+        # Smoothed Cost
+        ax2 = axes[0, 1]
+        ax2.plot(pd.Series(cost).rolling(20).mean(), 'r')
+        ax2.set_title('Cost (Smoothed)')
         ax2.set_xlabel('Episode')
         ax2.set_ylabel('Cost')
-        ax2.set_title('Episode via cost')
 
-        plt.tight_layout()  # Function to make distance between figures
+        # Rolling Steps
+        ax3 = axes[1, 0]
+        ax3.plot(pd.Series(steps).rolling(20).mean(), 'g')
+        ax3.set_title('Steps Trend (Window=20)')
 
-        #
-        plt.figure()
-        plt.plot(np.arange(len(steps)), steps, 'b')
-        plt.title('Episode via steps')
-        plt.xlabel('Episode')
-        plt.ylabel('Steps')
+        # Rolling Cost
+        ax4 = axes[1, 1]
+        ax4.plot(pd.Series(cost).rolling(20).mean(), 'm')
+        ax4.set_title('Cost Trend (Window=20)')
 
-        #
-        plt.figure()
-        plt.plot(np.arange(len(cost)), cost, 'r')
-        plt.title('Episode via cost')
-        plt.xlabel('Episode')
-        plt.ylabel('Cost')
+        plt.tight_layout()
 
-        # Showing the plots
+        # Convergence
+        fig2 = plt.figure()
+        plt.plot(pd.Series(steps).rolling(50).mean(), label="Steps (Smoothed)")
+        plt.title("Exp SARSA Convergence")
+        plt.xlabel("Episode")
+        plt.ylabel("Steps")
+        plt.legend()
+        plt.grid()
+
+        # Save
+        fig.savefig("exp_sarsa_main_plots.png")
+        fig2.savefig("exp_sarsa_convergence.png")
+
         plt.show()

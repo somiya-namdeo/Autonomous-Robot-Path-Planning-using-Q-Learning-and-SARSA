@@ -1,4 +1,6 @@
 # Importing classes
+import numpy as np
+import pandas as pd
 from env import Environment
 from agent_brain import QLearningTable
 
@@ -52,6 +54,33 @@ def update():
     # Showing the Q-table with values for each action
     RL.print_q_table()
 
+    # Save results to CSV
+    df = pd.DataFrame({
+    "steps": steps,
+    "cost": all_costs
+    })
+    df.to_csv("q_learning.csv", index=False)
+
+    # Performance metrics
+    print("\n------ Q-LEARNING PERFORMANCE ------")
+
+    print("Average Steps:", np.mean(steps))
+    print("Final 50 Avg Steps:", np.mean(steps[-50:]))
+
+    print("Min Steps:", np.min(steps))
+    print("Max Steps:", np.max(steps))
+
+    print("Variance:", np.var(steps))
+
+    print("Average Cost:", np.mean(all_costs))
+    print("Max Reward:", np.max(all_costs))
+
+    print("Efficiency (%):",
+      ((np.mean(steps[:100]) - np.mean(steps[-100:]))
+       / np.mean(steps[:100])) * 100)
+
+    print("Convergence (Last 50 Avg Steps):",
+    np.mean(steps[-50:]))
     # Plotting the results
     RL.plot_results(steps, all_costs)
 

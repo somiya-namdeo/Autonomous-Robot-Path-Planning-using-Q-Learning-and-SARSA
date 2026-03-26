@@ -1,5 +1,7 @@
 from env import Environment
 from agent_brain import QLearningTable
+import pandas as pd
+import numpy as np
 
 def run_episodes():
     episode_steps = []  # List to store the number of steps for each episode
@@ -40,10 +42,37 @@ def run_episodes():
 
     # Show the final route
     env.final()
+    
 
+    #Performance metrics
+    import numpy as np
+
+    print("\n------ PERFORMANCE METRICS ------")
+
+    print("Average Steps:", np.mean(episode_steps))
+    print("Final 50 Episodes Avg Steps:", np.mean(episode_steps[-50:]))
+
+    print("Min Steps (Best Path):", np.min(episode_steps))
+    print("Max Steps (Worst Case):", np.max(episode_steps))
+
+    print("Step Variance (Stability):", np.var(episode_steps))
+
+    print("Average Cost:", np.mean(episode_costs))
+    print("Max Reward:", np.max(episode_costs))
+
+    print("Efficiency (Steps Reduction %):",
+      ((np.mean(episode_steps[:100]) - np.mean(episode_steps[-100:])) 
+       / np.mean(episode_steps[:100])) * 100)
+    print("Convergence (Last 50 Avg Steps):", np.mean(episode_steps[-50:]))
+    
     # Show the Q-table with values for each action
     agent.print_q_table()
-
+    
+    df=pd.DataFrame({
+        "steps":episode_steps,
+        "cost":episode_costs
+    })
+    df.to_csv("q_learning.csv",index=False)
     # Plot the results
     agent.plot_results(episode_steps, episode_costs)
 

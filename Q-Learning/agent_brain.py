@@ -25,7 +25,7 @@ class QLearningTable:
     def learn(self, state, action, reward, next_state):
         self.check_state_exist(next_state)
         q_predict = self.q_table.loc[state, action]
-        if next_state != 'goal' or next_state != 'obstacle':
+        if next_state != 'goal' and next_state != 'obstacle':
             q_target = reward + self.reward_decay * self.q_table.loc[next_state, :].max()
         else:
             q_target = reward
@@ -61,26 +61,26 @@ class QLearningTable:
 
         # Plot 1: Episode via steps
         ax1 = axes[0, 0]
-        ax1.plot(np.arange(len(steps)), steps, 'b')
+        ax1.plot(pd.Series(steps).rolling(20).mean(), 'b')
         ax1.set_xlabel('Episode')
         ax1.set_ylabel('Steps')
-        ax1.set_title('Episode via Steps')
+        ax1.set_title('Steps (Smoothed)')
 
         # Plot 2: Episode via cost
         ax2 = axes[0, 1]
-        ax2.plot(np.arange(len(cost)), cost, 'r')
+        ax2.plot(pd.Series(cost).rolling(20).mean(), 'r')
         ax2.set_xlabel('Episode')
         ax2.set_ylabel('Cost')
-        ax2.set_title('Episode via Cost')
+        ax2.set_title('Cost (Smoothed)')
 
         # Calculate and plot rolling average of steps
-        rolling_window = 10
+        rolling_window = 20
         rolling_average = pd.Series(steps).rolling(rolling_window).mean()
         ax3 = axes[1, 0]
         ax3.plot(np.arange(len(rolling_average)), rolling_average, 'g')
         ax3.set_xlabel('Episode')
         ax3.set_ylabel('Rolling Average Steps')
-        ax3.set_title('Rolling Average Steps (Window={})'.format(rolling_window))
+        ax3.set_title('Steps Trend (Window=20)')
 
         # Calculate and plot rolling average of cost
         rolling_average_cost = pd.Series(cost).rolling(rolling_window).mean()
@@ -88,10 +88,22 @@ class QLearningTable:
         ax4.plot(np.arange(len(rolling_average_cost)), rolling_average_cost, 'm')
         ax4.set_xlabel('Episode')
         ax4.set_ylabel('Rolling Average Cost')
-        ax4.set_title('Rolling Average Cost (Window={})'.format(rolling_window))
+        ax4.set_title('Cost Trend (Window=20)')
 
+        # Plot 5: Convergence (steps)
+        fig2 = plt.figure()
+        plt.plot(pd.Series(steps).rolling(50).mean(), label="Steps (Smoothed)")
+        plt.xlabel("Episode")
+        plt.ylabel("Steps")
+        plt.title("Convergence Graph")
+        plt.legend()
+        plt.grid()
         # Adjust layout
         plt.tight_layout()
+
+        #Save graphs
+        fig.savefig("q_learning_main_plots.png")   # 4 subplots
+        fig2.savefig("q_learning_convergence.png") # convergence graph
 
         # Show the plots
         plt.show()
