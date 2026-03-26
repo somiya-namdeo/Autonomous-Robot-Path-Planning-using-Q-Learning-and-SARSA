@@ -1,92 +1,132 @@
-# 🚀 Autonomous Robot Path Planning using Reinforcement Learning (Q-Learning & SARSA)
+# Autonomous Robot Path Planning using Reinforcement Learning
 
-This project implements an intelligent robotic navigation system using **Reinforcement Learning (RL)** algorithms—**Q-Learning** and **SARSA**—to solve path planning problems in a grid-based environment.
-
-The agent learns to navigate efficiently, avoid obstacles, and reach a goal through continuous interaction with the environment.
+This project presents an autonomous robotic navigation system built using reinforcement learning algorithms—Q-Learning and SARSA—to solve path planning problems in a grid-based environment. The system enables an agent to learn optimal navigation strategies through interaction with its environment, balancing efficiency and safety.
 
 ---
 
-## 📚 Table of Contents
+## Overview
 
-- [Overview](#overview)
-- [Methodology](#methodology)
-  - [Environment](#environment)
-  - [Algorithms](#algorithms)
-- [Results](#results)
-- [Tech Stack](#tech-stack)
-- [Usage](#usage)
+Path planning is a core challenge in robotics and artificial intelligence. This project demonstrates how reinforcement learning can be applied to enable an agent to autonomously discover optimal paths while avoiding obstacles and minimizing cost.
+
+The agent continuously improves its policy by learning from rewards and penalties, leading to increasingly efficient navigation over time.
 
 ---
 
-## 📌 Overview
+## Methodology
 
-Path planning is a fundamental problem in robotics and artificial intelligence. This project demonstrates how reinforcement learning can be used to train an autonomous agent to discover optimal paths in a structured environment.
+### Environment
 
-The agent improves its performance over time by learning from rewards and penalties associated with its actions.
-
----
-
-## 🧠 Methodology
-
-### 🔹 Environment
-
-- 2D grid-based simulation  
-- Customizable grid size  
-- Static obstacles placed within the grid  
-- Goal location defined as the target state  
+* Two-dimensional grid-based simulation
+* Configurable grid size and layout
+* Static obstacles to simulate real-world constraints
+* Defined goal state representing the destination
 
 ---
 
-### 🔹 Algorithms
+### Algorithms
 
-#### 🟢 Q-Learning (Off-Policy)
+#### Q-Learning (Off-Policy Learning)
 
-- Learns optimal policy independent of current actions  
-- Uses maximum future reward for updates  
-- Faster convergence but may choose risky paths  
-
----
-
-#### 🔵 SARSA (On-Policy)
-
-- Learns based on the current action policy  
-- Updates values using actual actions taken  
-- Safer and more stable learning  
+* Learns the optimal policy independent of the agent’s current behavior
+* Updates values using the maximum expected future reward
+* Typically converges faster
+* May produce aggressive or risk-prone paths
 
 ---
 
-## 📊 Results
+#### SARSA (On-Policy Learning)
 
-- Decrease in number of steps over episodes  
-- Increase in cumulative reward  
-- Q-Learning shows faster learning  
-- SARSA demonstrates safer navigation behavior  
-
----
-
-## 🛠️ Tech Stack
-
-- Python  
-- NumPy  
-- Pandas  
-- Matplotlib  
-- Tkinter  
-- Pillow  
+* Learns based on the actual actions taken by the agent
+* Updates values using the current policy
+* More stable and conservative learning
+* Produces safer navigation behavior
 
 ---
 
-## ▶Usage
+## Results and Observations
 
-### Run Different algorithms (Both basic and advanced)
+* Progressive reduction in steps required to reach the goal
+* Increase in cumulative reward over training episodes
+* Q-Learning demonstrates faster convergence
+* SARSA results in safer and more stable path selection
+* Clear trade-off observed between optimality and safety
+
+---
+
+## Tech Stack
+
+* Python
+* NumPy
+* Pandas
+* Matplotlib
+* Tkinter
+* Pillow
+
+---
+
+## Project Structure
+
+```text
+RL_Q-Learning_E1/
+RL_Sarsa_E1/
+Q-Learning/
+Sarsa/
+```
+
+Each directory contains an independent implementation of the respective algorithm along with execution scripts.
+
+---
+
+## Usage
+
+### Run Q-Learning (Experimental Setup)
+
 ```bash
 cd RL_Q-Learning_E1
 python run_agent.py
+```
 
-cd ../RL_Sarsa_E1
-python run_agent.py
+### Run SARSA (Experimental Setup)
 
-cd ../Q-Learning
+```bash
+cd RL_Sarsa_E1
 python run_agent.py
+```
 
-cd ../Sarsa
+### Run Standard Q-Learning
+
+```bash
+cd Q-Learning
 python run_agent.py
+```
+
+### Run Standard SARSA
+
+```bash
+cd Sarsa
+python run_agent.py
+```
+
+---
+
+## Key Highlights
+
+* Implementation of both off-policy and on-policy reinforcement learning methods
+* Comparative analysis of learning behavior and performance
+* Modular and extensible environment design
+* Visualization of agent learning and path optimization
+
+---
+
+## Applications
+
+* Autonomous robotics navigation
+* Path optimization in constrained environments
+* Game AI and simulation systems
+* Smart transportation and logistics
+
+---
+
+## Author
+
+Somiya Namdeo
