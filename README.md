@@ -94,9 +94,9 @@ Q-Learning provides the best balance between convergence speed, efficiency, and 
 ![Cost Comparison](cost_comparison.png)
 
 ---
-
 ## Project Structure
-` ` `
+
+```
 RL/
 │
 ├── Q-Learning/
@@ -106,14 +106,13 @@ RL/
 ├── compare.py
 ├── steps_comparison.png
 ├── cost_comparison.png
-` ` `
+```
 
 Each directory contains:
 
 - Algorithm implementation  
 - Training script (`run_agent.py`)  
-- Generated results (CSV files and plots)  
-
+- Generated results (CSV files and plots)
 ---
 
 ## Usage
