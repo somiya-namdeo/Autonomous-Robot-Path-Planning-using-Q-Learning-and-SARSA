@@ -96,6 +96,7 @@ Q-Learning provides the best balance between convergence speed, efficiency, and 
 ---
 
 ## Project Structure
+` ` `
 RL/
 │
 ├── Q-Learning/
@@ -105,7 +106,7 @@ RL/
 ├── compare.py
 ├── steps_comparison.png
 ├── cost_comparison.png
-
+` ` `
 
 Each directory contains:
 
@@ -146,18 +147,22 @@ python compare.py
 ```
 
 ### Tech Stack
+` ` `
 Python
 NumPy
 Pandas
 Matplotlib
 Tkinter
 Pillow
+` ` `
 
 ### Applications
+` ` `
 Autonomous robot navigation
 Path optimization in constrained environments
 Game AI and simulations
 Smart transportation and logistics
+` ` `
 
 ### Author
 Somiya Namdeo
